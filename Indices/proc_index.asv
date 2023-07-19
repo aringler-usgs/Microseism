@@ -1,0 +1,24 @@
+clear
+i_names={'BEST','NAO','PDO','PNA','SOI','WP'};
+for j=1:length(i_names)
+    i_name=char(i_names(j))
+X=importdata([i_name,'.txt']);
+[a,b]=size(X);
+k=1;
+for i=1:a
+    for l=2:b
+        eval([i_name,'_year(k,1)=X(i)+(l-1.5)/12;']);
+        eval([i_name,'_date(k,1)=datenum(',i_name,'_year(k,1),1,1);'])
+        eval([i_name,'_data(k,1)=X(i,l);']);
+        k=k+1;
+    end
+end
+%interpolate for intercomparison with seismic data
+dmin=datenum(1985,1,1);
+dmax=datenum(2022,8,1);
+dinterp=dmin:dmax;
+eval([i_name,'_data_interp(k,1)=interp1(,'iname,'_date,'iname)
+eval(['save ',i_name,'.mat ',i_name,'_year ',i_name,'_data'])
+end
+figure(2000)
+plot(BEST_year,BEST_data)
